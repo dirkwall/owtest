@@ -8,9 +8,9 @@ function main(params) {
 	const template = params.template;
 	// Placeholders provided by Dynatrace
 	const dataString = params.data;
-	const data = JSON.parse(dataString)
+	const data = JSON.parse(dataString);
 
-	var message = mustache.render(template, data)
+	var message = mustache.render(template, data);
 
 	request.post(endpoint, {
 			json: {
@@ -18,12 +18,12 @@ function main(params) {
 			}
 	}, (error, res, body) => {
 			if (error) {
-				console.error(error)
-				return
+				console.error(error);
+				return;
 			}
 			else {
-				console.log(`statusCode: ${res.statusCode}`)
-				return {status: "done"}
+				console.log(`statusCode: ${res.statusCode}`);
+				return {status: "done"};
 			}
 	});
 }
