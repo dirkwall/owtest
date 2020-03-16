@@ -1,0 +1,24 @@
+{
+  "namespaces": 10,
+  "max_users": 10,
+  "max_rps": 100,
+  "functions": [
+    {
+      "name": "notify",
+      "url": "http://10.179.68.185:443/api/v1/namespaces/%s/actions/notify",
+      "payload": "{\"hello world\"}"
+    },
+    {
+      "name": "getDataXL",
+      "url": "http://10.179.68.185:443/api/v1/namespaces/%s/actions/getDataXL"
+    },
+    {
+      "name": "getDataS",
+      "url": "http://10.179.68.185:443/api/v1/namespaces/%s/actions/getDataS"
+    },
+    {
+      "name": "fibonacci20",
+      "url": "http://10.179.68.185:443/api/v1/namespaces/%s/actions/fibonacci20"
+    }
+  ]
+}
