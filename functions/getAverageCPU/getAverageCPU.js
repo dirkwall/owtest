@@ -32,7 +32,7 @@ function main(params) {
 
 				const average = sum/length;
 
-				return {payload: average};
+				return {averageCPU: average};
 			} catch (e) {
 				console.error(e.message);
 			}
