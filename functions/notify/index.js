@@ -10,6 +10,10 @@ function func(params) {
 	const dataString = params.data;
 	const data = JSON.parse(dataString);
 
+	console.log("endpoint: " + endpoint);
+	console.log("template: " + template);
+	console.log("data:     " + data);
+
 	const message = mustache.render(template, data);
 	const postData = JSON.stringify({"test":message});
 
