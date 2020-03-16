@@ -6,6 +6,7 @@ const requestListener = function(req, res) {
     body += chunk.toString();
   });
   req.on('end', () => {
+    console.log(body);
     res.end('ok');
   });
 }

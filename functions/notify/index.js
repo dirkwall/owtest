@@ -1,6 +1,7 @@
-var mustache = require('mustache')
+const mustache = require('mustache');
+const http = require('http');
 
-function main(params) {
+function func(params) {
 	// endpoint to post message to
 	const endpoint = params.endpoint;
 	// Message template provided by the user (maybe suggest default template)
@@ -34,3 +35,5 @@ function main(params) {
 	req.write(postData);
 	req.end();
 }
+
+exports.main = func;
