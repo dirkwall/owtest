@@ -1,4 +1,3 @@
-var request = require('request')
 var mustache = require('mustache')
 
 function main(params) {
@@ -10,20 +9,28 @@ function main(params) {
 	const dataString = params.data;
 	const data = JSON.parse(dataString);
 
-	var message = mustache.render(template, data);
+	const message = mustache.render(template, data);
+	const postData = JSON.stringify({"test":message});
 
-	request.post(endpoint, {
-			json: {
-					"text": message
-			}
-	}, (error, res, body) => {
-			if (error) {
-				console.error(error);
-				return;
-			}
-			else {
-				console.log(`statusCode: ${res.statusCode}`);
-				return {status: "done"};
-			}
+	const options = {
+		hostname: endpoint.split(":")[0],
+		port: endpoint.split(":")[1],
+		path: '/',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	};
+
+	const req = http.request(options, (res) => {
+		console.log(`STATUS: ${res.statusCode}`);
+		return {status: "done"};
 	});
+
+	req.on('error', (e) => {
+		console.error(`problem with request: ${e.message}`);
+	});
+
+	req.write(postData);
+	req.end();
 }
