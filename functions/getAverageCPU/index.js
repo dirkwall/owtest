@@ -1,32 +1,30 @@
 const needle = require("needle");
 
-function main(params) {
+function func(params) {
 	console.log("start");
 	const url = params.url;
 	console.log("url: ", url);
 
-	needle('get', url)
-		.then(function(res) {
-			console.log("mkay");
-			const data = res.body;
-			console.log(data);
+  return new Promise(function(resolve, reject) {
+    needle('get', url)
+      .then(function(res) {
+        const data = res.body;
+        const length = data.length;
+        var sum = 0;
 
-			const length = data.length;
-			var sum = 0;
+        data.forEach(element => {
+          sum += element.logicalCpuCores;
+        });
 
-			data.forEach(element => {
-				sum += element.logicalCpuCores;
-			});
-
-			const average = sum/length;
-			console.log("average: ", average);
-
-			return {averageCPU: average};
-		})
-		.catch(function(err) {
-			console.error(`Got error: ${err}`);
-		});
+        const average = sum/length;
+        console.log("average: ", average);
+        resolve({averageCPU: average});
+      })
+      .catch(function(err) {
+        console.error(`Got error: ${err}`);
+        reject({error: err});
+      });
+  });
 }
 
-// For testing
-//main({url:"localhost:8080"});
+exports.main = func;
