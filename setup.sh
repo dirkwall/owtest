@@ -23,12 +23,11 @@ function create_users() {
     for u in $(seq 1 $MAX_USERS); do
       CREDENTIALS=$(wskadmin user create user$u -ns ns$n)
       echo "user$u ns$n $CREDENTIALS"
-      B64CREDS=$(echo -n $CREDENTIALS | base64 -w0)
       COMMA=","
       if [ $u -eq $MAX_USERS ] && [ $n -eq $NAMESPACES ]; then
         COMMA=""
       fi
-      echo "  {\"namespace\":\"ns$n\", \"credentials\":\"$B64CREDS\"}$COMMA" >> $CRED_FILE
+      echo "  {\"namespace\":\"ns$n\", \"credentials\":\"$CREDENTIALS\"}$COMMA" >> $CRED_FILE
     done
   done
   echo "]" >> $CRED_FILE
