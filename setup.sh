@@ -71,12 +71,28 @@ function create_functions() {
   done
 }
 
+function delete_functions() {
+  #iterate over functions
+  jq -c '.[]' functions.json | while read i; do
+    F_NAME=`echo $i | jq -r '.name'`
+    
+    # iterate over namespaces
+    for n in $(seq 1 $NAMESPACES); do
+      NS="ns$n"
+      jq -c '[.[] | select( .namespace == "'$NS'")][0]' credentials.json | while read i; do
+        CREDENTIAL=`echo $i | jq -r '.credentials'`
+        wsk action delete $NS$F_NAME -u $CREDENTIAL
+      done
+    done
+  done
+}
+
 if [ "$OP" = "c" ]; then
   create_users
+  create_functions
 elif [ "$OP" = "d" ]; then
   delete_users
-elif [ "$OP" = "cf" ]; then
-  create_functions
+  delete_functions
 else
   echo "OPERATION must be either 'c' for create or 'd' for delete" && exit 1
 fi
