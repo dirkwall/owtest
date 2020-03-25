@@ -65,7 +65,7 @@ function create_functions() {
       NS="ns$n"
       jq -c '[.[] | select( .namespace == "'$NS'")][0]' credentials.json | while read i; do
         CREDENTIAL=`echo $i | jq -r '.credentials'`
-        wsk action create $NS$F_NAME $F_FILE -c $F_CONCURRENCY --kind $F_KIND -m $F_MEMORY -t $F_TIMEOUT -u $CREDENTIAL
+        wsk -i action create $NS$F_NAME $F_FILE -c $F_CONCURRENCY --kind $F_KIND -m $F_MEMORY -t $F_TIMEOUT -u $CREDENTIAL
       done
     done
   done
@@ -81,7 +81,7 @@ function delete_functions() {
       NS="ns$n"
       jq -c '[.[] | select( .namespace == "'$NS'")][0]' credentials.json | while read i; do
         CREDENTIAL=`echo $i | jq -r '.credentials'`
-        wsk action delete $NS$F_NAME -u $CREDENTIAL
+        wsk -i action delete $NS$F_NAME -u $CREDENTIAL
       done
     done
   done
