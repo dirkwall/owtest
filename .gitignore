@@ -1,3 +1,5 @@
 functions/notify/node_modules
 functions/notify/package-lock.json
 functions/notify/*.zip
+functions/getAverageCPU/package-lock.json
+functions/getAverageCPU/node_modules

@@ -1,0 +1,7 @@
+{
+  "name": "get-average-cpu",
+  "main": "index.js",
+  "dependencies": {
+    "needle": "^2.3.0"
+  }
+}
