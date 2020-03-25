@@ -1,0 +1,32 @@
+[
+  {
+    "name": "fibonacci",
+    "path": "./functions/fibonacci",
+    "file": "./functions/fibonacci/fibonacci.js",
+    "zip": false,
+    "kind": "nodejs:10",
+    "concurrency": 1,
+    "memory": 256,
+    "timeout": 60
+  },
+  {
+    "name": "avgcpu",
+    "path": "./functions/avgcpu",
+    "file": "./functions/avgcpu/function.zip",
+    "zip": true,
+    "kind": "nodejs:10",
+    "concurrency": 1,
+    "memory": 256,
+    "timeout": 60
+  },
+  {
+    "name": "notify",
+    "path": "./functions/notify",
+    "file": "./functions/notify/function.zip",
+    "zip": true,
+    "kind": "nodejs:10",
+    "concurrency": 1,
+    "memory": 256,
+    "timeout": 60
+  }
+]
