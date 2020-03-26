@@ -5,20 +5,16 @@
   "functions": [
     {
       "name": "notify",
-      "url": "http://10.179.68.185:443/api/v1/namespaces/%s/actions/notify",
+      "url": "http://10.179.68.185:443/api/v1/namespaces/_/actions/notify",
       "payload": "{\"hello world\"}"
     },
     {
-      "name": "getDataXL",
-      "url": "http://10.179.68.185:443/api/v1/namespaces/%s/actions/getDataXL"
+      "name": "avgcpu",
+      "url": "http://10.179.68.185:443/api/v1/namespaces/_/actions/avgcpu"
     },
     {
-      "name": "getDataS",
-      "url": "http://10.179.68.185:443/api/v1/namespaces/%s/actions/getDataS"
-    },
-    {
-      "name": "fibonacci20",
-      "url": "http://10.179.68.185:443/api/v1/namespaces/%s/actions/fibonacci20"
+      "name": "fibonacci",
+      "url": "http://10.179.68.185:443/api/v1/namespaces/_/actions/fibonacci"
     }
   ]
 }

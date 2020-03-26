@@ -17,19 +17,33 @@ function delete_users() {
 }
 
 function create_users() {
-  echo "[" > $CRED_FILE
+  echo "{" > $CRED_FILE
+  echo "  \"namespaces\": [" >> $CRED_FILE
   for n in $(seq 1 $NAMESPACES); do
+    echo "    {" >> $CRED_FILE
+    echo "      \"name\": \"ns$n\"," >> $CRED_FILE
+    echo "      \"users\": [" >> $CRED_FILE
     for u in $(seq 1 $USERS); do
       CREDENTIALS=$(wskadmin user create user$u -ns ns$n)
       echo "user$u ns$n $CREDENTIALS"
-      COMMA=","
-      if [ $u -eq $USERS ] && [ $n -eq $NAMESPACES ]; then
-        COMMA=""
+      USER_COMMA=","
+      if [ $u -eq $USERS ]; then
+        USER_COMMA=""
       fi
-      echo "  {\"namespace\":\"ns$n\", \"credentials\":\"$CREDENTIALS\"}$COMMA" >> $CRED_FILE
+      echo "        {" >> $CRED_FILE
+      echo "          \"name\": \"ns${n}user${u}\","
+      echo "          \"credentials\": \"$CREDENTIALS\""
+      echo "        }$USER_COMMA" >> $CRED_FILE
     done
+    echo "      ]" >> $CRED_FILE
+    NAMESPACE_COMMA=","
+    if [ $n -eq $NAMESPACES ]; then
+      NAMESPACE_COMMA=""
+    fi
+    echo "    }$NAMESPACE_COMMA" >> $CRED_FILE
   done
-  echo "]" >> $CRED_FILE
+  echo "  ]" >> $CRED_FILE
+  echo "}" >> $CRED_FILE
 }
 
 function prepare_function() {
