@@ -73,7 +73,8 @@ else:
     ns_name = "ns{}".format(n)
 
     # delete users
-    for u in range(args.users):
+    users = math.ceil(args.users/(n+1))
+    for u in range(users):
       cmd = "wskadmin user delete user{} -ns {}".format(u, ns_name)
       ret = subprocess.run(cmd.split(" "))
       print("user{} {} deleted".format(u, ns_name))
