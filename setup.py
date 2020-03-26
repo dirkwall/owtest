@@ -11,7 +11,7 @@ parser.add_argument('operation', help="The operation to do", choices=['create','
 parser.add_argument('namespaces', help="Number of namespaces", type=int, choices=range(1,21))
 parser.add_argument('users', help="Number of users", type=int, choices=range(1,21))
 parser.add_argument('rps', help="Maximum number of requests per second", type=int, choices=range(1,200))
-parser.add_agrument('host', help="IP or DNS name of host running OpenWhisk")
+parser.add_argument('host', help="IP or DNS name of host running OpenWhisk")
 args = parser.parse_args()
 
 if args.operation == "create":
