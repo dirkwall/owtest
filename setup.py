@@ -53,7 +53,7 @@ if args.operation == "create":
   for n in range(args.namespaces):
     ns_name = "ns{}".format(n)
     users = math.ceil(args.users/(n+1))
-    for u in range(args.users):
+    for u in range(users):
       user_name = "user{}".format(u)
       for f in functions:
         weight = math.ceil(args.rps/(n+1))
