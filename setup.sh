@@ -31,8 +31,8 @@ function create_users() {
         USER_COMMA=""
       fi
       echo "        {" >> $CRED_FILE
-      echo "          \"name\": \"ns${n}user${u}\","
-      echo "          \"credentials\": \"$CREDENTIALS\""
+      echo "          \"name\": \"ns${n}user${u}\"," >> $CRED_FILE
+      echo "          \"credentials\": \"$CREDENTIALS\"" >> $CRED_FILE
       echo "        }$USER_COMMA" >> $CRED_FILE
     done
     echo "      ]" >> $CRED_FILE
