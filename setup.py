@@ -21,7 +21,8 @@ if args.operation == "create":
     credentials[ns_name] = {}
 
     # create users
-    for u in range(args.users):
+    users = math.ceil(args.users/(n+1))
+    for u in range(users):
       user_name = "user{}".format(u)
       cmd = "wskadmin user create {} -ns {}".format(user_name, ns_name)
       ret = subprocess.run(cmd.split(" "), stdout=subprocess.PIPE, universal_newlines=True)
