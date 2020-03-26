@@ -4,11 +4,14 @@ import argparse
 import json
 import subprocess
 import os.path
+import math
 
 parser = argparse.ArgumentParser(description='Create/delete namespaces, users, and functions in OpenWhisk')
 parser.add_argument('operation', help="The operation to do", choices=['create','delete'])
 parser.add_argument('namespaces', help="Number of namespaces", type=int, choices=range(1,21))
 parser.add_argument('users', help="Number of users", type=int, choices=range(1,21))
+parser.add_argument('rps', help="Maximum number of requests per second", type=int, choices=range(1,200))
+parser.add_agrument('host', help="IP or DNS name of host running OpenWhisk")
 args = parser.parse_args()
 
 if args.operation == "create":
@@ -41,8 +44,28 @@ if args.operation == "create":
       # create function
       cmd = "wsk -i action create {}{} {} -c {} --kind {} -m {} -t {} -u {}".format(ns_name, f['name'], f['file'], f['concurrency'], f['kind'], f['memory'], f['timeout'], credentials[ns_name]["user0"])
       ret = subprocess.run(cmd.split(" "))
+  
+  # create requests.json array
+  with open('functions.json') as functions_json:
+    functions = json.load(functions_json)
 
-        
+  requests = []
+  for n in range(args.namespaces):
+    ns_name = "ns{}".format(n)
+    users = math.ceil(users/(n+1))
+    for u in range(args.users):
+      user_name = "user{}".format(u)
+      for f in functions:
+        weight = math.ceil(args.rps/(n+1))
+        for i in range(weight):
+          r = {}
+          r['url'] = "https://{}/api/v1/namespaces/_/actions/{}{}".format(args.host, ns_name, f['name'])
+          r['credentials'] = credentials[ns_name][user_name]
+          requests.append(r)
+  
+  # create functions
+  with open('requests.json') as json_file:
+    json.dump(requests, json_file)
 
 else:
   for n in range(args.namespaces):
