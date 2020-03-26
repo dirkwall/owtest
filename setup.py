@@ -52,7 +52,7 @@ if args.operation == "create":
   requests = []
   for n in range(args.namespaces):
     ns_name = "ns{}".format(n)
-    users = math.ceil(users/(n+1))
+    users = math.ceil(args.users/(n+1))
     for u in range(args.users):
       user_name = "user{}".format(u)
       for f in functions:
