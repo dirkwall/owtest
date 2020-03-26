@@ -64,8 +64,8 @@ if args.operation == "create":
           requests.append(r)
   
   # create functions
-  with open('requests.json') as json_file:
-    json.dump(requests, json_file)
+  with open('requests.json', 'w') as outfile:
+    json.dump(requests, outfile)
 
 else:
   for n in range(args.namespaces):
