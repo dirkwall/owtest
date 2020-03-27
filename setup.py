@@ -5,6 +5,7 @@ import json
 import subprocess
 import os.path
 import math
+import base64
 
 parser = argparse.ArgumentParser(description='Create/delete namespaces, users, and functions in OpenWhisk')
 parser.add_argument('operation', help="The operation to do", choices=['create','delete'])
@@ -62,6 +63,7 @@ if args.operation == "create":
           r = {}
           r['url'] = "https://{}/api/v1/namespaces/_/actions/{}{}".format(args.host, ns_name, f['name'])
           r['credentials'] = credentials[ns_name][user_name]
+          r['auth_header'] = base64.b64encode(credentials[ns_name][user_name].encode())
           requests.append(r)
   
   # create functions
