@@ -13,4 +13,4 @@ const requestListener = function(req, res) {
 
 const server = http.createServer(requestListener);
 server.listen(8080);
-console.log("Listening on 8080");
+console.log("Starting notify server on 8080");

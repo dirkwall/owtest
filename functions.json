@@ -7,7 +7,8 @@
     "kind": "nodejs:10",
     "concurrency": 1,
     "memory": 256,
-    "timeout": 60000
+    "timeout": 60000,
+    "params":{}
   },
   {
     "name": "avgcpu",
@@ -17,7 +18,10 @@
     "kind": "nodejs:10",
     "concurrency": 1,
     "memory": 256,
-    "timeout": 60000
+    "timeout": 60000,
+    "params": {
+      "url": "http://1.2.3.4:8080"
+    }
   },
   {
     "name": "notify",
@@ -27,6 +31,11 @@
     "kind": "nodejs:10",
     "concurrency": 1,
     "memory": 256,
-    "timeout": 60000
+    "timeout": 60000,
+    "params": {
+      "endpoint": "http://1.2.3.4:8080",
+      "template": "{{state}} Problem {{problemID}}: {{impactedEntity}}",
+      "data": "{\"state\":\"OPEN\",\"problemID\":\"1337\",\"impactedEntity\":\"MyService\"}"
+    }
   }
 ]

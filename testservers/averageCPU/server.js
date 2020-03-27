@@ -25,5 +25,5 @@ const requestListener = function(req, res) {
 }
 
 const server = http.createServer(requestListener);
-server.listen(8080);
-console.log("Listening on 8080");
+server.listen(8081);
+console.log("Starting avgcpu server on 8081");
