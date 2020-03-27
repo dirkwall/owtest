@@ -61,7 +61,7 @@ if args.operation == "create":
         weight = math.ceil(args.rps/(n+1))
         for i in range(weight):
           r = {}
-          r['url'] = "https://{}/api/v1/namespaces/_/actions/{}{}".format(args.host, ns_name, f['name'])
+          r['url'] = "https://{}/api/v1/namespaces/_/actions/{}{}?blocking=true".format(args.host, ns_name, f['name'])
           r['credentials'] = credentials[ns_name][user_name]
           r['auth_header'] = base64.b64encode(credentials[ns_name][user_name].encode())
           requests.append(r)
