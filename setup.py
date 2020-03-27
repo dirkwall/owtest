@@ -74,13 +74,6 @@ else:
   for n in range(args.namespaces):
     ns_name = "ns{}".format(n)
 
-    # delete users
-    users = math.ceil(args.users/(n+1))
-    for u in range(users):
-      cmd = "wskadmin user delete user{} -ns {}".format(u, ns_name)
-      ret = subprocess.run(cmd.split(" "))
-      print("user{} {} deleted".format(u, ns_name))
-    
     # delete functions
     with open('functions.json') as functions_json:
       functions = json.load(functions_json)
@@ -90,3 +83,12 @@ else:
     for f in functions:
       cmd = "wsk -i action delete {}{} -u {}".format(ns_name, f['name'], credentials[ns_name]["user0"])
       ret = subprocess.run(cmd.split(" "))
+
+    # delete users
+    users = math.ceil(args.users/(n+1))
+    for u in range(users):
+      cmd = "wskadmin user delete user{} -ns {}".format(u, ns_name)
+      ret = subprocess.run(cmd.split(" "))
+      print("user{} {} deleted".format(u, ns_name))
+    
+    
