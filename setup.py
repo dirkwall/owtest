@@ -63,7 +63,7 @@ if args.operation == "create":
           r = {}
           r['url'] = "https://{}/api/v1/namespaces/_/actions/{}{}?blocking=true".format(args.host, ns_name, f['name'])
           r['credentials'] = credentials[ns_name][user_name]
-          r['auth_header'] = base64.b64encode(credentials[ns_name][user_name].encode())
+          r['auth_header'] = base64.b64encode(credentials[ns_name][user_name].encode()).decode('utf-8')
           requests.append(r)
   
   # create functions
