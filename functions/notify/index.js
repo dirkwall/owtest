@@ -7,7 +7,7 @@ function func(params) {
 	// Message template provided by the user (maybe suggest default template)
 	const template = params.template;
 	// Placeholders provided by Dynatrace
-	const data = params.data;
+	const data = {"state":"OPEN","problemID":"1337","impactedEntity":"MyService"};
 	
 	const message = mustache.render(template, data);
 	const postData = JSON.stringify({"test":message});
