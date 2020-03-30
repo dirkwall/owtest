@@ -57,7 +57,7 @@ if args.operation == "create":
     users = math.ceil(args.users/(n+1))
 
     with open(filename, "w") as outfile:
-      for u in range(args.users):
+      for u in range(users):
         user_name = "user{}".format(u)
         for f in functions:
           # namespace, name, credentials, IP, path, payload
