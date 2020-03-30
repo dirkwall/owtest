@@ -51,25 +51,22 @@ if args.operation == "create":
   with open('functions.json') as functions_json:
     functions = json.load(functions_json)
 
-  requests = []
   for n in range(args.namespaces):
     ns_name = "ns{}".format(n)
+    filename = "data_{}.csv".format(ns_name)
     users = math.ceil(args.users/(n+1))
-    weight = math.ceil(args.rps/(n+1))
-    for u in range(users):
-      user_name = "user{}".format(u)
-      for f in functions:
-        r = {}
-        r['weight'] = weight
-        r['url'] = "https://{}/api/v1/namespaces/_/actions/{}{}?blocking=true".format(args.host, ns_name, f['name'])
-        r['credentials'] = credentials[ns_name][user_name]
-        r['auth_header'] = base64.b64encode(credentials[ns_name][user_name].encode()).decode('utf-8')
-        r['params'] = f['params']
-        requests.append(r)
 
-  # create functions
-  with open('requests.json', 'w') as outfile:
-    json.dump(requests, outfile)
+    with open(filename, "w") as outfile:
+      for u in range(args.users):
+        user_name = "user{}".format(u)
+        for f in functions:
+          # namespace, name, credentials, IP, path, payload
+          payload = ""
+          if f['params']:
+            jsondump = json.dumps(f['params'])
+            payload = base64.b64encode(jsondump.encode()).decode()
+          r = "{},{},{},{},/api/v1/namespaces/_/actions/{}{}?blocking=true,{}{}".format(ns_name, f['name'], "creds", "args.host", ns_name, f['name'], payload, "\n")
+          outfile.write(r)
 
 else:
   for n in range(args.namespaces):
@@ -91,5 +88,3 @@ else:
       cmd = "wskadmin user delete user{} -ns {}".format(u, ns_name)
       ret = subprocess.run(cmd.split(" "))
       print("user{} {} deleted".format(u, ns_name))
-    
-    
