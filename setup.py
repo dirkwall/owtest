@@ -65,7 +65,7 @@ if args.operation == "create":
           if f['params']:
             jsondump = json.dumps(f['params'])
             payload = base64.b64encode(jsondump.encode()).decode()
-          r = "{},{},{},{},/api/v1/namespaces/_/actions/{}{}?blocking=true,{}{}".format(ns_name, f['name'], "creds", "args.host", ns_name, f['name'], payload, "\n")
+          r = "{},{},{},{},/api/v1/namespaces/_/actions/{}{}?blocking=true,{}{}".format(ns_name, f['name'], credentials[ns_name][user_name], args.host, ns_name, f['name'], payload, "\n")
           outfile.write(r)
 
 else:
