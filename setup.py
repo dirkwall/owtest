@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(description='Create/delete namespaces, users, a
 parser.add_argument('operation', help="The operation to do", choices=['create','delete'])
 parser.add_argument('namespaces', help="Number of namespaces", type=int, choices=range(1,21))
 parser.add_argument('users', help="Number of users", type=int, choices=range(1,21))
-parser.add_argument('rps', help="Maximum number of requests per second", type=int, choices=range(1,200))
+parser.add_argument('duration', help="Duration of performance test in seconds", type=int)
 parser.add_argument('host', help="IP or DNS name of host running OpenWhisk")
 args = parser.parse_args()
 
@@ -47,7 +47,7 @@ if args.operation == "create":
       cmd = "wsk -i action create {}{} {} -c {} --kind {} -m {} -t {} -u {}".format(ns_name, f['name'], f['file'], f['concurrency'], f['kind'], f['memory'], f['timeout'], credentials[ns_name]["user0"])
       ret = subprocess.run(cmd.split(" "))
   
-  # create requests.json array
+  # create data csv
   with open('functions.json') as functions_json:
     functions = json.load(functions_json)
 
@@ -67,6 +67,33 @@ if args.operation == "create":
             payload = base64.b64encode(jsondump.encode()).decode()
           r = "{},{},{},{},/api/v1/namespaces/_/actions/{}{}?blocking=true,{}{}".format(ns_name, f['name'], credentials[ns_name][user_name], args.host, ns_name, f['name'], payload, "\n")
           outfile.write(r)
+  
+  # create jmx file
+  header_lines = open('templates/header.xml').readlines()
+  threadgroup_lines = open('templates/threadgroup.xml').readlines()
+  footer_lines = open('templates/footer.xml').readlines()
+
+  lines = [] + header_lines
+
+  for n in range(args.namespaces):
+    ns_name = "ns{}".format(n)
+    users = str(math.ceil(args.users/(n+1)))
+
+    for line in threadgroup_lines:
+      if "REPLACE_NAMESPACE" in line:
+        lines.append(line.replace("REPLACE_NAMESPACE", ns_name))
+      elif "REPLACE_USERS" in line:
+        lines.append(line.replace("REPLACE_USERS", users))
+      elif "REPLACE_DURATION" in line:
+        lines.append(line.replace("REPLACE_DURATION", str(args.duration)))
+      else:
+        lines.append(line)
+
+  lines = lines + footer_lines
+
+  with open("owtest.jmx", "w") as out:
+    for line in lines:
+      out.write(line)
 
 else:
   for n in range(args.namespaces):
