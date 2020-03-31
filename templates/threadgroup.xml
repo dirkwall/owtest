@@ -83,5 +83,52 @@
                   </collectionProp>
                </HeaderManager>
                <hashTree />
+               <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="getTemperature" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">import java.util.regex.Matcher;
+      import java.util.regex.Pattern;
+
+      String stringToSearch = prev.getResponseDataAsString();
+      Pattern p = Pattern.compile(&quot;initTime&quot;);
+      Matcher m = p.matcher(stringToSearch);
+      if (m.find()){
+         vars.put(&quot;temperature&quot;, &quot;cold&quot;);
+      }
+      else {
+         vars.put(&quot;temperature&quot;, &quot;warm&quot;);
+      }</stringProp>
+               </JSR223PostProcessor>
+               <hashTree/>
+               <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="getWaitTime" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">waitTime</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.annotations[1:2].value</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  <stringProp name="JSONPostProcessor.defaultValues">-1</stringProp>
+               </JSONPostProcessor>
+               <hashTree/>
+               <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="getInitTime" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">initTime</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.annotations[5:6].value</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  <stringProp name="JSONPostProcessor.defaultValues">0</stringProp>
+               </JSONPostProcessor>
+               <hashTree/>
+               <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="getDuration" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">duration</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.duration</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  <stringProp name="JSONPostProcessor.defaultValues">-1</stringProp>
+               </JSONPostProcessor>
+               <hashTree/>
+               <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="getActivationId" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">activationId</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.activationId</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  <stringProp name="JSONPostProcessor.defaultValues">-1</stringProp>
+               </JSONPostProcessor>
+               <hashTree/>
             </hashTree>
          </hashTree>
