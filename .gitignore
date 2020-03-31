@@ -2,4 +2,4 @@
 **/package-lock.json
 **/node_modules/*
 credentials.json
-test.sh
+test.py
