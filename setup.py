@@ -9,8 +9,8 @@ import base64
 
 parser = argparse.ArgumentParser(description='Create/delete namespaces, users, and functions in OpenWhisk')
 parser.add_argument('operation', help="The operation to do", choices=['create','delete'])
-parser.add_argument('namespaces', help="Number of namespaces", type=int, choices=range(1,21))
-parser.add_argument('users', help="Number of users", type=int, choices=range(1,21))
+parser.add_argument('namespaces', help="Number of namespaces", type=int)
+parser.add_argument('users', help="Number of users", type=int)
 parser.add_argument('duration', help="Duration of performance test in seconds", type=int)
 parser.add_argument('host', help="IP or DNS name of host running OpenWhisk")
 args = parser.parse_args()
